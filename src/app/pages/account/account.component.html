@@ -1,0 +1,166 @@
+<app-header></app-header>
+
+<div class="content-wrapper">
+    <div class="row purchace-popup">
+      <div class="col-12">
+            <span class="d-block d-md-flex align-items-center"></span>
+      </div>
+    </div>
+  
+    <form class="form-sample" [formGroup]="userUpData" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">UPDATE USER DETAILS</h4>
+  
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">USER ID</label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" formControlName='id' readonly/>
+                  </div>
+                </div>
+              </div>
+  
+            
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-6 col-form-label">FIRST NAME</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" formControlName='firstName' />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">LAST NAME</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" formControlName='lastName' />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-6 col-form-label">EMAIL</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" formControlName='email' />
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-success mr-2" >Submit</button>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">ORDER DETAILS</h4>
+
+          <div class="conatiner" style="padding-top:5px;">
+            <div class="table-responsive" style="overflow: scroll">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>CUSTOMER ID</th>
+                    <th>CART PRODUCTS</th>
+                    <th>TOTAL BILL</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let order of orders">
+                  <tr>                    
+                    <td>{{order.id}}</td>
+                  
+                                      
+                    <td>{{order.customerId}}</td>
+                  
+                                      
+                    <td><a class="nav-link" data-toggle="modal" data-target="#products">Products</a></td>
+                  
+                                     
+                    <td>{{order.totalBill}}</td>
+                  
+                                      
+                    <td>{{order.status}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+  <!-- Modal -->
+<div class="modal fade" id="products" role="dialog" >
+        <div class="modal-dialog" >
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cart Products</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>            
+            <div class="modal-body">
+                    <div class="table-responsive" style="overflow: scroll">
+
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>PRODUCT ID</th>
+                                  <th>PRODUCT NAME</th>
+                                  <th>QUANTITY</th>
+                                  <th>PRICE</th>                                  
+                                </tr>
+                              </thead>
+                              <tbody *ngFor="let product of orders.cartProducts">
+                                <tr>                    
+                                  <td>{{product.productId}}</td>
+                                                    
+                                  <td>{{product.productName}}</td>
+                                                   
+                                  <td>{{product.quantity}}</td>
+                                                    
+                                  <td>{{product.price}}</td>
+                                </tr>
+              
+                              </tbody>
+                            </table>
+                          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" #closeBtn>Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+<app-footer></app-footer>
+
+
+

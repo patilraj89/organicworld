@@ -1,0 +1,137 @@
+<header class="main-header">
+  <!-- Start Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+      <div class="container">
+          <!-- Start Header Navigation -->
+          <div class="navbar-header">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fa fa-bars"></i>
+          </button>
+              <a class="navbar-brand"><img src="../../../assets/images/logo.webp" class="logo" alt="" style="width: 70px; height: 70px;"></a>
+          </div>
+          <!-- End Header Navigation -->
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="navbar-menu">
+              <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                  <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>                  
+                  <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#loginModal" *ngIf="!isLoggedIn">LOGIN</a></li>
+                  <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#registerModal" *ngIf="!isLoggedIn">REGISTER</a></li>                  
+                  <li class="dropdown">
+                    <a class="nav-link dropdown-toggle arrow" data-toggle="dropdown" *ngIf="isLoggedIn" routerLink="/products/all">Products</a>
+                    <ul class="dropdown-menu">                        
+                        <li><a style="color: white" routerLink="[/products,'fruit']">fruit</a></li>
+                        <li><a style="color: white" routerLink="[/products,'vegetable']">vegetable</a></li>
+                        <li><a style="color: white" routerLink="[/products,'grocery']">grocery</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                  <a class="nav-link dropdown-toggle arrow" data-toggle="dropdown" *ngIf="isLoggedIn" routerLink="/account">Account</a>
+                  <ul class="dropdown-menu">
+                    <li><a style="color: white" *ngIf="isLoggedIn" (click)="signOut()">Logout</a></li>                    
+                </ul>
+                </li>                  
+              <li class="nav-item"><a class="nav-link" *ngIf="isLoggedIn" routerLink="/cart">Cart</a></li>                  
+              </ul>
+              <form [formGroup]="searchForm" class="form-inline">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="content" formControlName="content">
+                  <button class="btn btn-outline-light my-2 my-sm-0" style="color: black" type="button" (click)="search(searchForm.value)" #searchBtn>Search</button>
+              </form>
+          </div>
+
+      </div>
+
+  </nav>
+  <!-- End Navigation -->
+</header>
+
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" role="dialog" >
+  <div class="modal-dialog" >
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title">Login</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <span class="invalid-login-cred"  *ngIf="invalidCredentials">Incorrect email or password</span>
+      <div class="modal-body">
+          <form [formGroup]="loginForm" (ngSubmit)="logIn(loginForm.value)" class="was-validated">                
+              <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" id="loginEmailId" class="form-control"  placeholder="Enter Email" formControlName="email" required>
+                  <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <div class="form-group">
+                  <label for="pwd">Password:</label>
+                  <input type="password" id="loginPasswordId" class="form-control"  placeholder="Enter Password" formControlName="password" required>
+                  <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <input type="submit" class="btn btn-primary"value= "Login">
+          </form>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" #closeBtn>Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="registerModal" role="dialog" >
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header ">
+          <h4 class="modal-title" >Register</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        
+      </div>
+      <div class="modal-body">
+          <!-- <span class="invalid-login-cred"  *ngIf="regSuccess">Registration Completed Successfully, Please Login with your credentials </span> -->
+          <span class="invalid-login-cred"  *ngIf="emailExists"> {{message}} </span>
+          <form class="was-validated" [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
+              <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" class="form-control"  placeholder="Enter First Name"  formControlName="firstName" required>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control"  placeholder="Enter Last Name" formControlName="lastName"  required>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" id="registerEmailId" class="form-control"  placeholder="Enter Email" formControlName="email" required>
+                  <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <div class="form-group">
+                  <label for="pwd">Password:</label>
+                  <input type="password" id="registerPasswordId" class="form-control"  placeholder="Enter Password" formControlName="password" required>
+                  <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <div class="form-group">
+                  <label for="cpwd">Confirm Password:</label>
+                  <input type="password" id="registerConfirmPasswordId" class="form-control"  placeholder="Enter Confirm Password" formControlName="confirmPassword" required>
+                  <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+              <input type="submit"  class="btn btn-primary" value = "Register">
+          </form>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" #closeBtnReg>Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+

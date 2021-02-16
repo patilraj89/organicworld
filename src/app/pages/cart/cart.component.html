@@ -1,0 +1,74 @@
+<app-header></app-header>
+
+<div class="content-wrapper">
+       
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">CART DETAILS</h4>          
+
+          <div class="conatiner" style="padding-top:5px;">
+                       
+            <div class="table-responsive" style="overflow: scroll">
+
+              <table class="table table-striped" >
+                <thead>
+                  <tr>                    
+                    <th>PRODUCT ID</th>
+                    <th>PRODUCT NAME</th>
+                    <th>QUANTITY</th>
+                    <th>PRICE</th>
+                    <th>REMOVE ITEM</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let crt of cartItems;let i = index">
+                  <tr>                    
+                    <td>{{crt.productId}}</td>
+                    <td>{{crt.productName}}</td>
+                    <td>
+                        <select id="select1" onchange="updateQuantity(this.value,'add')">
+                            <option value="{{crt.quantity}}">{{crt.quantity}}</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+
+                    </td>
+                    <td>{{crt.price}}</td>
+                    <td style="color: blue"><a (click)=removeProduct(i)>REMOVE</a></td>
+                  </tr>
+
+                </tbody>
+                <tbody>
+                    <tr>                    
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>Total</td>
+                      <td style="color:black"><a>{{subTotal}}</a></td>
+                    </tr>
+  
+                  </tbody>
+              </table>
+
+            </div>
+            <p></p>
+        
+            <div class="row">
+                <div class="col-md-6">
+                  <button type="submit" (click)="checkOut()" class="btn btn-success pull-right">
+                    CHECKOUT</button>
+                </div>                
+              </div>
+
+
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<app-footer></app-footer>
+
